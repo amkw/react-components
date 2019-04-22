@@ -1,16 +1,34 @@
-var GroceryList = (props) => {
+class GroceryListItem extends React.Component {
+  constructor(props) {
+    super(props);
 
-  var onListItemClick = (event) => {
-  console.log('I got clicked');
-  };
+    this.state = {
+      done: false
+    };
+  }
+  onListItemClick() {
+    this.setState({
+      done: !this.state.done
+    });
+  }
 
-  return (
-    <ul>
-      <li onClick={onListItemClick}>{props.items[0]}</li>
-      <li>{props.items[1]}</li>
-    </ul>
-  );
-  };
+  render() {
+    var style = {
+      'fontWeight': this.state.done ? '900' : '400'
+    }
+    return (
+      <li style={style} onMouseEnter={this.onListItemClick.bind(this)}>{this.props.item}</li>
+    )
+  }
+}
+
+var GroceryList = (props) => (
+  <ul>
+    {props.items.map(item =>
+      <GroceryListItem item={item} />
+    )}
+  </ul>
+);
 
 var App = () => (
   <div>
